@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mango_valley/singup.dart';
+import 'package:mango_valley/mango_server/app_server.dart';
+import 'package:mango_valley/screen/Home.dart';
+import 'package:mango_valley/screen/singup.dart';
 
 class login extends StatefulWidget {
   const login({super.key});
@@ -10,6 +13,9 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
+  TextEditingController phonecontroller = TextEditingController();
+  TextEditingController passcontroller = TextEditingController();
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,11 +65,12 @@ class _loginState extends State<login> {
                   height: 50,
                 ),
                 TextField(
+                  controller: phonecontroller,
                   style: TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                       fillColor: Colors.grey.shade100,
                       filled: true,
-                      labelText: "Email",
+                      labelText: "Phone",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       )),
@@ -72,6 +79,7 @@ class _loginState extends State<login> {
                   height: 30,
                 ),
                 TextField(
+                  controller: passcontroller,
                   style: TextStyle(),
                   obscureText: true,
                   decoration: InputDecoration(
@@ -100,7 +108,22 @@ class _loginState extends State<login> {
                       backgroundColor: Colors.deepOrange.shade400,
                       child: IconButton(
                           color: Colors.white,
-                          onPressed: () {},
+                          onPressed: () async {
+                            var response = await AppServer.login(
+                              phone: phonecontroller.text.toLowerCase(),
+                              password: passcontroller.text.toString(),
+                            );
+
+                            if (response.statusCode == 200) {
+                              Get.showSnackbar(
+                                GetSnackBar(
+                                  message: response.data["message"].toString(),
+                                  duration: const Duration(seconds: 3),
+                                ),
+                              );
+                              Get.to(Home());
+                            }
+                          },
                           icon: Icon(
                             Icons.arrow_forward,
                           )),

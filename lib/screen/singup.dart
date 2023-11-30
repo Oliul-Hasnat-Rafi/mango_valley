@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mango_valley/login.dart';
+import 'package:mango_valley/mango_server/app_server.dart';
+import 'package:mango_valley/screen/login.dart';
 
 class singup extends StatefulWidget {
   const singup({super.key});
@@ -10,6 +13,11 @@ class singup extends StatefulWidget {
 }
 
 class _singupState extends State<singup> {
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController phonecontroller = TextEditingController();
+
+  TextEditingController passwordcontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +59,7 @@ class _singupState extends State<singup> {
                   height: 50,
                 ),
                 TextField(
+                  controller: namecontroller,
                   style: TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     fillColor: Colors.grey.shade100,
@@ -65,12 +74,13 @@ class _singupState extends State<singup> {
                   height: 10,
                 ),
                 TextField(
-                  //   controller: emailcontroller,
+                  controller: phonecontroller,
+                  keyboardType: TextInputType.phone,
                   style: TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     fillColor: Colors.grey.shade100,
                     filled: true,
-                    labelText: "Email",
+                    labelText: "phone",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -80,7 +90,7 @@ class _singupState extends State<singup> {
                   height: 10,
                 ),
                 TextField(
-                  //    controller: passwordcontroller,
+                  controller: passwordcontroller,
                   style: TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     fillColor: Colors.grey.shade100,
@@ -95,9 +105,21 @@ class _singupState extends State<singup> {
                   height: 10,
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    // login(emailcontroller.text.toString(),
-                    //     passwordcontroller.text.toString());
+                  onPressed: () async {
+                    var response = await AppServer.register(
+                        phone: phonecontroller.text.toLowerCase(),
+                        password: passwordcontroller.text.toString(),
+                        name: namecontroller.text.toString());
+
+                    if (response.statusCode == 200) {
+                      Get.showSnackbar(
+                        GetSnackBar(
+                          message: response.data["message"].toString(),
+                          duration: const Duration(seconds: 3),
+                        ),
+                      );
+                      Get.to(login());
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepOrange.shade400,
@@ -115,6 +137,7 @@ class _singupState extends State<singup> {
                 ),
                 Container(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         'already have an account',
@@ -125,8 +148,7 @@ class _singupState extends State<singup> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (c) => login()));
+                          Get.to(login());
                         },
                         child: Text(
                           'Login in',
