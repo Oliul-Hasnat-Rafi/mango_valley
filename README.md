@@ -1,16 +1,10 @@
-# mango_valley
+# project1_class17 Mango Valley
+<h2>Project Screenshots:</h2>
+<p align="center">
+  <b>Login and Signup
+  <br>
+  <img src="https://i.postimg.cc/D0XQ5dyy/Screenshot-20231129-172353.jpg" width="250" height = "500" >
+  <img src="https://i.postimg.cc/L4YVHRBK/Screenshot-20231129-172357.jpg" width="250" height = "500" >
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ 
+</p>
