@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mango_valley/mango_server/app_server.dart';
-import 'package:mango_valley/screen/Home.dart';
+import 'package:mango_valley/screen/Homepage.dart';
 import 'package:mango_valley/screen/singup.dart';
 
 class login extends StatefulWidget {
@@ -121,7 +121,7 @@ class _loginState extends State<login> {
                                   duration: const Duration(seconds: 3),
                                 ),
                               );
-                              Get.to(Home());
+                              Get.to(Homepage());
                             }
                           },
                           icon: Icon(

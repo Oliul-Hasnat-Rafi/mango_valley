@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mango_valley/mango_server/api_list.dart';
+import 'package:mango_valley/model/CategoryModel.dart';
 
 class AppServer {
   // final store = GetStorage();
@@ -64,29 +65,24 @@ class AppServer {
     }
   }
 
-  // Future<CategoryModel> showCategory() async {
-  //   var response;
-  //   var dio = Dio();
+  Future<CategoryModel> showCategory() async {
+    var response;
+    var dio = Dio();
 
-  //   String url = APIList.baseURL.toString() + APIList.categoryList.toString();
+    String url = APIList.baseURL.toString() + APIList.categoryList.toString();
 
-  //   try{
+    try {
+      response = await dio.get(url);
 
-  //     response = await dio.get(url);
+      if (response.statusCode == 200) {
+        return CategoryModel.fromJson(response.data);
+      }
+    } catch (e) {
+      print(e);
+    }
 
-  //     if(response.statusCode == 200)
-  //     {
-  //       return CategoryModel.fromJson(response.data);
-  //     }
-
-  //   }
-  //   catch(e)
-  //   {
-  //     print(e);
-  //   }
-
-  //   return CategoryModel.fromJson(response.data);
-  // }
+    return CategoryModel.fromJson(response.data);
+  }
 
   // Future<ProfileModel> showProfile({required String user_id}) async {
   //   var response;

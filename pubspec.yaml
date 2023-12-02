@@ -38,6 +38,8 @@ dependencies:
   google_fonts: ^6.1.0
   dio: ^5.3.4
   get: ^4.6.6
+  flutter_swiper_view: ^1.1.8
+  salomon_bottom_bar: ^3.3.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -64,6 +66,9 @@ flutter:
   assets:
     - images/login_mango.jpg
     - images/singup_mango.jpg
+    - images/mango1.jpg
+    - images/mango2.jpg
+    - images/mango3.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
