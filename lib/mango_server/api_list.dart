@@ -5,6 +5,7 @@ class APIList {
   static const login = 'login';
   static const register = 'register';
   static const categoryList = 'show_categories';
+  static const productsList = 'show_popular_products';
   static const profile = 'show_profile/';
   static const updateProfile = 'profile_update';
 }

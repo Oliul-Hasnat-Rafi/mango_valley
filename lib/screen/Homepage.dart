@@ -20,40 +20,65 @@ class _HomeState extends State<Homepage> {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              title: Text('Mango Valley'),
+              title: Image.asset(
+                'images/logo.png',
+                fit: BoxFit.fill,
+                height: 110,
+              ),
+              centerTitle: true,
             ),
-            bottomNavigationBar: SalomonBottomBar(
-              currentIndex: _currentIndex,
-              onTap: (i) => setState(() => _currentIndex = i),
-              items: [
-                /// Home
-                SalomonBottomBarItem(
-                  icon: Icon(Icons.home),
-                  title: Text("Home"),
-                  selectedColor: Colors.purple,
-                ),
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(238, 49, 2, 75),
+                    borderRadius: BorderRadius.circular(10)),
+                child: SalomonBottomBar(
+                  currentIndex: _currentIndex,
+                  onTap: (i) => setState(() => _currentIndex = i),
+                  items: [
+                    /// Home
+                    SalomonBottomBarItem(
+                      icon: Icon(
+                        Icons.home,
+                        color: Colors.white,
+                      ),
+                      title: Text("Home"),
+                      selectedColor: Colors.purple,
+                    ),
 
-                /// Likes
-                SalomonBottomBarItem(
-                  icon: Icon(Icons.favorite_border),
-                  title: Text("favorite"),
-                  selectedColor: Colors.pink,
-                ),
+                    /// Likes
+                    SalomonBottomBarItem(
+                      icon: Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      ),
+                      title: Text("favorite"),
+                      selectedColor: Colors.pink,
+                    ),
 
-                /// Search
-                SalomonBottomBarItem(
-                  icon: Icon(Icons.shopping_cart),
-                  title: Text("Cart"),
-                  selectedColor: Colors.orange,
-                ),
+                    /// Search
+                    SalomonBottomBarItem(
+                      icon: Icon(
+                        Icons.shopping_cart,
+                        color: Colors.white,
+                      ),
+                      title: Text("Cart"),
+                      selectedColor: Colors.orange,
+                    ),
 
-                /// Profile
-                SalomonBottomBarItem(
-                  icon: Icon(Icons.person),
-                  title: Text("Profile"),
-                  selectedColor: Colors.teal,
+                    /// Profile
+                    SalomonBottomBarItem(
+                      icon: Icon(
+                        Icons.person,
+                        color: Colors.white,
+                      ),
+                      title: Text("Profile"),
+                      selectedColor: Colors.teal,
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
             body: pages[_currentIndex]));
   }
