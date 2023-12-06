@@ -1,30 +1,22 @@
-class Productmodel {
-  String? message;
-  List<Data>? data;
+class ProductModel {
+  String message;
+  Map<String, ProductItem> data;
 
-  Productmodel({this.message, this.data});
+  ProductModel({required this.message, required this.data});
 
-  Productmodel.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
-  }
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    Map<String, dynamic> dataJson = json['data'];
+    Map<String, ProductItem> data = Map.fromEntries(dataJson.entries.map(
+        (entry) => MapEntry(entry.key, ProductItem.fromJson(entry.value))));
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
+    return ProductModel(
+      message: json['message'],
+      data: data,
+    );
   }
 }
 
-class Data {
+class ProductItem {
   int? id;
   String? picture;
   String? title;
@@ -36,51 +28,37 @@ class Data {
   String? description;
   String? viewCount;
   String? stock;
-  String? postby;
+  String? postBy;
 
-  Data(
-      {this.id,
-      this.picture,
-      this.title,
-      this.catname,
-      this.price,
-      this.amount,
-      this.quality,
-      this.size,
-      this.description,
-      this.viewCount,
-      this.stock,
-      this.postby});
+  ProductItem({
+    this.id,
+    this.picture,
+    this.title,
+    this.catname,
+    this.price,
+    this.amount,
+    this.quality,
+    this.size,
+    this.description,
+    this.viewCount,
+    this.stock,
+    this.postBy,
+  });
 
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    picture = json['picture'];
-    title = json['title'];
-    catname = json['catname'];
-    price = json['price'];
-    amount = json['amount'];
-    quality = json['quality'];
-    size = json['size'];
-    description = json['description'];
-    viewCount = json['view_count'];
-    stock = json['stock'];
-    postby = json['postby'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['picture'] = this.picture;
-    data['title'] = this.title;
-    data['catname'] = this.catname;
-    data['price'] = this.price;
-    data['amount'] = this.amount;
-    data['quality'] = this.quality;
-    data['size'] = this.size;
-    data['description'] = this.description;
-    data['view_count'] = this.viewCount;
-    data['stock'] = this.stock;
-    data['postby'] = this.postby;
-    return data;
+  factory ProductItem.fromJson(Map<String, dynamic> json) {
+    return ProductItem(
+      id: json['id'],
+      picture: json['picture'],
+      title: json['title'],
+      catname: json['catname'],
+      price: json['price'],
+      amount: json['amount'],
+      quality: json['quality'],
+      size: json['size'],
+      description: json['description'],
+      viewCount: json['view_count'],
+      stock: json['stock'],
+      postBy: json['postby'],
+    );
   }
 }
