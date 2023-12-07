@@ -265,10 +265,12 @@ class _ProductdetailState extends State<Productdetail> {
           GestureDetector(
             onTap: () async {
               dbHelper!.insert(CartModel(
-                  //amount: fruitAmount*,
+                  id: productinfo.productinfo!.data![0].id!.toInt(),
                   title: productinfo.productinfo!.data![0].title.toString(),
-                  id: productinfo.productinfo!.data![0].id,
-                  quality: fruitAmount.toString()));
+                  price: productinfo.productinfo!.data![0].price.toString(),
+                  amount: productinfo.productinfo!.data![0].amount.toString(),
+                  picture:
+                      productinfo.productinfo!.data![0].picture.toString()));
             },
             child: Container(
               height: 60.0,

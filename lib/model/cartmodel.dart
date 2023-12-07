@@ -1,10 +1,11 @@
 class CartModel {
-  int? id;
-  String? picture;
-  String? title;
+  int id;
+  String title;
+  String price;
+  String amount;
+  String picture;
+
   String? catname;
-  String? price;
-  String? amount;
   String? quality;
   String? size;
   String? description;
@@ -13,12 +14,12 @@ class CartModel {
   String? postby;
 
   CartModel(
-      {this.id,
-      this.picture,
-      this.title,
+      {required this.id,
+      required this.picture,
+      required this.title,
       this.catname,
-      this.price,
-      this.amount,
+      required this.price,
+      required this.amount,
       this.quality,
       this.size,
       this.description,
