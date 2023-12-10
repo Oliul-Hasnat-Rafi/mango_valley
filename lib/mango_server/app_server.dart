@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:mango_valley/mango_server/api_list.dart';
 import 'package:mango_valley/model/CategoryModel.dart';
 import 'package:mango_valley/model/Product_model.dart';
+import 'package:mango_valley/model/ProfileModel.dart';
 import 'package:mango_valley/model/productinfo.dart';
 
 class AppServer {
@@ -125,29 +126,25 @@ class AppServer {
     return Productinfo.fromJson(response.data);
   }
 
-  // Future<ProfileModel> showProfile({required String user_id}) async {
-  //   var response;
-  //   var dio = Dio();
+  Future<ProfileModel> showProfile({required String user_id}) async {
+    var response;
+    var dio = Dio();
 
-  //   String url = APIList.baseURL.toString() + APIList.profile.toString() + user_id;
+    String url =
+        APIList.baseURL.toString() + APIList.profile.toString() + user_id;
 
-  //   try{
+    try {
+      response = await dio.get(url);
 
-  //     response = await dio.get(url);
+      if (response.statusCode == 200) {
+        return ProfileModel.fromJson(response.data);
+      }
+    } catch (e) {
+      print(e);
+    }
 
-  //     if(response.statusCode == 200)
-  //     {
-  //       return ProfileModel.fromJson(response.data);
-  //     }
-
-  //   }
-  //   catch(e)
-  //   {
-  //     print(e);
-  //   }
-
-  //   return ProfileModel.fromJson(response.data);
-  // }
+    return ProfileModel.fromJson(response.data);
+  }
 
   // static profileUpdate({required String phone, required String name, required String user_id}) async {
   //   var response;

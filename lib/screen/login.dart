@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mango_valley/main.dart';
 import 'package:mango_valley/mango_server/app_server.dart';
 import 'package:mango_valley/screen/Homepage.dart';
 import 'package:mango_valley/screen/singup.dart';
@@ -15,7 +16,16 @@ class login extends StatefulWidget {
 class _loginState extends State<login> {
   TextEditingController phonecontroller = TextEditingController();
   TextEditingController passcontroller = TextEditingController();
-  @override
+  void initState() async {
+    super.initState();
+    final token = await box!.get('token');
+    print("Token" + token);
+    if (token != null) {
+      Get.to(Homepage());
+    }
+    print(token);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,7 +131,11 @@ class _loginState extends State<login> {
                                   duration: const Duration(seconds: 3),
                                 ),
                               );
+
                               Get.to(Homepage());
+                              box!.put(
+                                  'token', response.data["token"].toString());
+                              box!.put('id', response.data["id"].toString());
                             }
                           },
                           icon: Icon(

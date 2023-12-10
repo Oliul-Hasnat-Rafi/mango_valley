@@ -1,58 +1,52 @@
 import 'package:mango_valley/model/cartmodel.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
-import 'dart:io' as io;
 
-class DBHelper {
-  static Database? _db;
+//
+class DBhelper {
+  static int _verson = 1;
+  static String dbname = "Cart.db";
 
-  Future<Database?> get db async {
-    if (_db != null) {
-      return _db!;
-    }
-
-    _db = await initDatabase();
+  static Future<Database> getdb() async {
+    return openDatabase(join(await getDatabasesPath(), dbname),
+        onCreate: (db, version) async => await db.execute(
+            'CREATE TABLE cart (id INTEGER NOT NULL ,title TEXT NOT NULL,price TEXT NOT NULL,amount TEXT NOT NULL,picture TEXT NOT NULL)'),
+        version: _verson);
   }
 
-  initDatabase() async {
-    io.Directory documentDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentDirectory.path, 'cart.db');
-    var db = await openDatabase(
-      path,
-      version: 1,
-      onCreate: _onCreate,
+  Future<int> insert(CartModel carts) async {
+    final db = await getdb();
+    return db.insert(
+      "cart",
+      carts.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    return db;
   }
 
-  _onCreate(Database db, int version) async {
-    await db.execute(
-        'CREATE TABLE cart (id INTEGER PRIMARY KEY , productId VARCHAR UNIQUE,productName TEXT, productPrice INTEGER , quantity INTEGER, image TEXT )');
+  Future<int> delete(CartModel carts) async {
+    final db = await getdb();
+    return db.delete(
+      "cart",
+      where: 'id=?',
+      whereArgs: [carts.id],
+    );
   }
 
-  Future<CartModel> insert(CartModel cart) async {
-    print(cart.toMap());
-    var dbClient = await db;
-    await dbClient!.insert('cart', cart.toMap());
-    return cart;
+  Future<int> updatecart(CartModel carts) async {
+    final db = await getdb();
+    return db.update(
+      "cart",
+      carts.toMap(),
+      where: 'id=?',
+      whereArgs: [carts.id],
+    );
   }
 
   Future<List<CartModel>> getCartList() async {
-    var dbClient = await db;
-    final List<Map<String, Object?>> queryResult =
-        await dbClient!.query('cart');
-    return queryResult.map((e) => CartModel.fromMap(e)).toList();
-  }
+    final db = await getdb();
+    final List<Map<String, dynamic>> maps = await db.query('cart');
 
-  Future<int> delete(int id) async {
-    var dbClient = await db;
-    return await dbClient!.delete('cart', where: 'id = ?', whereArgs: [id]);
-  }
-
-  Future<int> updateQuantity(CartModel cart) async {
-    var dbClient = await db;
-    return await dbClient!
-        .update('cart', cart.toMap(), where: 'id = ?', whereArgs: [cart.id]);
+    return List.generate(
+        maps.length, (index) => CartModel.fromMap(maps[index]));
   }
 }

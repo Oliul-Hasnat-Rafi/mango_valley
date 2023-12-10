@@ -19,7 +19,7 @@ class _ProductdetailState extends State<Productdetail> {
   Color? selectedButtonColor;
   Color? selectedHeartIcon;
   final Productconroller productinfo = Get.put(Productconroller());
-  DBHelper? dbHelper = DBHelper();
+  DBhelper? dbHelper = DBhelper();
   @override
   void initState() {
     super.initState();
@@ -264,13 +264,16 @@ class _ProductdetailState extends State<Productdetail> {
           ),
           GestureDetector(
             onTap: () async {
-              dbHelper!.insert(CartModel(
-                  id: productinfo.productinfo!.data![0].id!.toInt(),
-                  title: productinfo.productinfo!.data![0].title.toString(),
-                  price: productinfo.productinfo!.data![0].price.toString(),
-                  amount: productinfo.productinfo!.data![0].amount.toString(),
-                  picture:
-                      productinfo.productinfo!.data![0].picture.toString()));
+              await dbHelper!
+                  .insert(CartModel(
+                      id: productinfo.productinfo!.data![0].id!.toInt(),
+                      title: productinfo.productinfo!.data![0].title.toString(),
+                      price: productinfo.productinfo!.data![0].price.toString(),
+                      amount:
+                          productinfo.productinfo!.data![0].amount.toString(),
+                      picture:
+                          productinfo.productinfo!.data![0].picture.toString()))
+                  .then((value) => print(value));
             },
             child: Container(
               height: 60.0,
