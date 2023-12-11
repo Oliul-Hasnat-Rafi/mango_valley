@@ -15,7 +15,7 @@ const TextStyle titleTextStyle = TextStyle(
 );
 
 class Favt extends StatefulWidget {
-  Favt({super.key});
+  Favt({Key? key}) : super(key: key);
 
   @override
   State<Favt> createState() => _FavtState();
@@ -35,127 +35,145 @@ class _FavtState extends State<Favt> {
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
                   alignment: Alignment.topLeft,
-                  child: Text(
-                    'My Favourite',
-                    style: titleTextStyle,
-                  ),
+                  child: favtcontroller.favtproduct.isEmpty
+                      ? Text(
+                          '',
+                          style: titleTextStyle,
+                        )
+                      : Text(
+                          'My Favourite',
+                          style: titleTextStyle,
+                        ),
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: favtcontroller.favtproduct.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    final currentProductId =
-                        favtcontroller.Products!.data![index].id;
-                    if (favtcontroller.favtproduct.length != 0) {
-                      if (favtcontroller.favtproduct
-                          .contains(currentProductId)) {
-                        return Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(defaultPadding),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  height: 200,
-                                  width: 350,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade300,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.all(imagePadding),
-                                        child: Align(
-                                          alignment: Alignment.topCenter,
-                                          child: Container(
-                                            height: 100,
-                                            width: 300,
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                image: NetworkImage(
-                                                  'https://mangobee.influxdev.com/public/productpic/' +
-                                                      favtcontroller.Products!
-                                                          .data![index].picture
-                                                          .toString(),
-                                                ),
-                                                fit: BoxFit.cover,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                          ),
-                                        ),
+                child: Obx(
+                  () {
+                    if (favtcontroller.favtproduct.isEmpty) {
+                      return Center(
+                        child: Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image:
+                                        AssetImage('images/no_favourite.png'))),
+                            child: SizedBox(
+                              height: 10,
+                              child: Text(
+                                "You don't have any favourites",
+                                style: titleTextStyle,
+                              ),
+                            )),
+                      );
+                    } else {
+                      return ListView.builder(
+                        itemCount: favtcontroller.favtproduct.length,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          final currentProductId =
+                              favtcontroller.Products!.data![index].id;
+                          if (favtcontroller.favtproduct
+                              .contains(currentProductId)) {
+                            return Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(defaultPadding),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: 200,
+                                      width: 350,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade300,
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.only(left: textPadding),
-                                        child: Text(
-                                          favtcontroller
-                                              .Products!.data![index].title
-                                              .toString(),
-                                          style: titleTextStyle,
-                                        ),
-                                      ),
-                                      Row(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Padding(
+                                            padding:
+                                                EdgeInsets.all(imagePadding),
+                                            child: Align(
+                                              alignment: Alignment.topCenter,
+                                              child: Container(
+                                                height: 100,
+                                                width: 300,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: NetworkImage(
+                                                      'https://mangobee.influxdev.com/public/productpic/' +
+                                                          favtcontroller
+                                                              .Products!
+                                                              .data![index]
+                                                              .picture
+                                                              .toString(),
+                                                    ),
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
                                             padding: EdgeInsets.only(
-                                                left: rowPadding,
-                                                right: rowPadding),
+                                                left: textPadding),
                                             child: Text(
-                                              favtcontroller.Products!
-                                                      .data![index].amount
-                                                      .toString() +
-                                                  'KG',
+                                              favtcontroller
+                                                  .Products!.data![index].title
+                                                  .toString(),
                                               style: titleTextStyle,
                                             ),
                                           ),
-                                          Text(
-                                            favtcontroller.Products!
-                                                    .data![index].price
-                                                    .toString() +
-                                                '৳',
-                                            style: titleTextStyle.copyWith(
-                                                color: Colors.orange),
-                                          ),
-                                          Spacer(),
-                                          Padding(
-                                            padding: EdgeInsets.all(
-                                                circleAvatarPadding),
-                                            child: CircleAvatar(
-                                              backgroundColor: Colors.orange,
-                                              child: Icon(
-                                                Icons.shopping_cart,
-                                                color: Colors.white,
+                                          Row(
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: rowPadding,
+                                                    right: rowPadding),
+                                                child: Text(
+                                                  favtcontroller.Products!
+                                                          .data![index].amount
+                                                          .toString() +
+                                                      'KG',
+                                                  style: titleTextStyle,
+                                                ),
                                               ),
-                                            ),
-                                          ),
+                                              Text(
+                                                favtcontroller.Products!
+                                                        .data![index].price
+                                                        .toString() +
+                                                    '৳',
+                                                style: titleTextStyle.copyWith(
+                                                    color: Colors.orange),
+                                              ),
+                                              Spacer(),
+                                              Padding(
+                                                padding: EdgeInsets.all(
+                                                    circleAvatarPadding),
+                                                child: CircleAvatar(
+                                                  backgroundColor:
+                                                      Colors.orange,
+                                                  child: Icon(
+                                                    Icons.shopping_cart,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )
                                         ],
-                                      )
-                                    ],
-                                  ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }
-                    } else {
-                      return Center(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image:
-                                      AssetImage('images/no_favourite.png'))),
-                          child: Text(
-                            "You don't have any favourites",
-                            style: titleTextStyle,
-                          ),
-                        ),
+                              ),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
                       );
                     }
                   },

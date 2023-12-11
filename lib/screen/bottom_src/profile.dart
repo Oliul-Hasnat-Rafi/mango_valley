@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mango_valley/conroller/profilecontroller.dart';
+import 'package:mango_valley/main.dart';
 import 'package:mango_valley/screen/Homepage.dart';
 import 'package:mango_valley/screen/login.dart';
 
@@ -31,6 +32,38 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       body: Column(
         children: <Widget>[
+          Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                  onPressed: () => Get.defaultDialog(
+                      title: 'Warning',
+                      middleText: "Are sure to log out?",
+                      confirm: TextButton(
+                          onPressed: () => onConfirmPressed(),
+                          child: Text(
+                            'Yes',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          )),
+                      cancel: TextButton(
+                          onPressed: () => Get.back(),
+                          child: Text('No',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ))),
+                      backgroundColor: Colors.green,
+                      titleStyle: titleTextStyle,
+                      middleTextStyle: titleTextStyle),
+                  icon: Icon(Icons.logout_outlined)),
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -67,6 +100,7 @@ class _ProfileState extends State<Profile> {
             ],
           ),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 margin: EdgeInsets.only(top: 10),
@@ -111,5 +145,10 @@ class _ProfileState extends State<Profile> {
         ],
       ),
     );
+  }
+
+  void onConfirmPressed() {
+    box!.delete('token');
+    Get.to(login());
   }
 }
