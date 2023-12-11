@@ -4,7 +4,7 @@ import 'package:mango_valley/model/cartmodel.dart';
 import 'package:mango_valley/services/dbhelper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class cartcontroller extends GetxController {
+class CartController extends GetxController {
   DBhelper db = DBhelper();
   RxInt _counter = 0.obs;
   RxInt get counter => _counter;
@@ -22,15 +22,15 @@ class cartcontroller extends GetxController {
 
   void _setPrefItems() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('cart_item', _counter as int);
-    prefs.setDouble('total_price', _totalPrice as double);
+    prefs.setInt('cart_item', _counter.value);
+    prefs.setDouble('total_price', _totalPrice.value);
     refresh();
   }
 
   void _getPrefItems() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _counter = (prefs.getInt('cart_item') ?? 0) as RxInt;
-    _totalPrice = (prefs.getDouble('total_price') ?? 0.0) as RxDouble;
+    _counter.value = prefs.getInt('cart_item') ?? 0;
+    _totalPrice.value = prefs.getDouble('total_price') ?? 0.0;
     refresh();
   }
 
@@ -46,9 +46,9 @@ class cartcontroller extends GetxController {
     refresh();
   }
 
-  RxDouble getTotalPrice() {
+  double getTotalPrice() {
     _getPrefItems();
-    return _totalPrice;
+    return _totalPrice.value;
   }
 
   void addCounter() {
@@ -57,14 +57,16 @@ class cartcontroller extends GetxController {
     refresh();
   }
 
-  void removerCounter() {
-    _counter--;
-    _setPrefItems();
-    refresh();
+  void removeCounter() {
+    if (_counter > 0) {
+      _counter--;
+      _setPrefItems();
+      refresh();
+    }
   }
 
-  RxInt getCounter() {
+  int getCounter() {
     _getPrefItems();
-    return _counter;
+    return _counter.value;
   }
 }

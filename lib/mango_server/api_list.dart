@@ -4,6 +4,7 @@ class APIList {
 
   static const login = 'login';
   static const register = 'register';
+  static const checkout = 'checkout';
   static const categoryList = 'show_categories';
   static const productsList = 'show_popular_products';
   static const productinfo = 'product/';

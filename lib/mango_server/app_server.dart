@@ -67,6 +67,63 @@ class AppServer {
     }
   }
 
+  static checkout({
+    required String invoice,
+    required String userid,
+    required String username,
+    required String phonenumber,
+    required String productid,
+    required String producttitle,
+    required String productamount,
+    required String quantity,
+    required String productprice,
+    required String productpic,
+    required String status,
+    required String senderphonenumber,
+    required String paymentmethod,
+    required String paymentstatus,
+    required String trxid,
+    required String totalamount,
+    required String paymentamount,
+    required String deliverycharge,
+    required String statdeliverychargeus,
+    required String courierbranch,
+  }) async {
+    var response;
+    var dio = Dio();
+    String url = APIList.baseURL + APIList.checkout;
+    try {
+      response = await dio.post(url,
+          data: {
+            'username': username,
+            'phonenumber': phonenumber,
+            'productid': productid,
+            'producttitle': producttitle,
+            'productamount': productamount,
+            'quantity': quantity,
+            'productprice': productprice,
+            'productpic': productpic,
+            'status': status,
+            'senderphonenumber': senderphonenumber,
+            'paymentmethod': paymentmethod,
+            'paymentstatus': paymentstatus,
+            'trxid': trxid,
+            'totalamount': totalamount,
+            'paymentamount': paymentamount,
+            'deliverycharge': deliverycharge,
+            'statdeliverychargeus': statdeliverychargeus,
+            'courierbranch': courierbranch,
+          },
+          options: Options(headers: header));
+
+      print('.........$response');
+
+      return response;
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<CategoryModel> showCategory() async {
     var response;
     var dio = Dio();

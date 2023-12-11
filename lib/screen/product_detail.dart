@@ -262,38 +262,67 @@ class _ProductdetailState extends State<Productdetail> {
           const SizedBox(
             height: 30.0,
           ),
-          GestureDetector(
-            onTap: () async {
-              await dbHelper!
-                  .insert(CartModel(
-                      id: productinfo.productinfo!.data![0].id!.toInt(),
-                      title: productinfo.productinfo!.data![0].title.toString(),
-                      price: productinfo.productinfo!.data![0].price.toString(),
-                      amount:
-                          productinfo.productinfo!.data![0].amount.toString(),
-                      picture:
-                          productinfo.productinfo!.data![0].picture.toString()))
-                  .then((value) => print(value));
-            },
-            child: Container(
-              height: 60.0,
-              // width: 300,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  40.0,
-                ),
-                color: AppColor.yellowBigButtonColor,
-              ),
-              child: const Center(
-                child: Text(
-                  "ADD TO CART",
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  height: 60.0,
+                  width: 150,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      30.0,
+                    ),
+                    color: AppColor.yellowBigButtonColor,
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "BUY NOW",
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+              GestureDetector(
+                onTap: () async {
+                  await dbHelper!
+                      .insert(CartModel(
+                          id: productinfo.productinfo!.data![0].id!.toInt(),
+                          title: productinfo.productinfo!.data![0].title
+                              .toString(),
+                          price: productinfo.productinfo!.data![0].price
+                              .toString(),
+                          amount: productinfo.productinfo!.data![0].amount
+                              .toString(),
+                          picture: productinfo.productinfo!.data![0].picture
+                              .toString()))
+                      .then((value) => print(value));
+                },
+                child: Container(
+                  height: 60.0,
+                  width: 150,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      30.0,
+                    ),
+                    color: AppColor.yellowBigButtonColor,
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "ADD TO CART",
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

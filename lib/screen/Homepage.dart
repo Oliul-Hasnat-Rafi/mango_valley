@@ -14,7 +14,7 @@ class Homepage extends StatefulWidget {
 
 class _HomeState extends State<Homepage> {
   var _currentIndex = 0;
-  List pages = [Home(), Favt(), Cart(), Profile()];
+  List pages = [Home(), Favt(), CartPage(), Profile()];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
