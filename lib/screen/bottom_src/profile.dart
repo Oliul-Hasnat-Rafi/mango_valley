@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mango_valley/conroller/profilecontroller.dart';
 import 'package:mango_valley/screen/Homepage.dart';
+import 'package:mango_valley/screen/login.dart';
+
+const TextStyle titleTextStyle = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w700,
+  color: Color.fromARGB(238, 49, 2, 75),
+);
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -12,6 +19,13 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final Profilecontroller Profilecontrollers = Get.put(Profilecontroller());
+
+  @override
+  void initState() {
+    super.initState();
+    Profilecontrollers.fetchprofile();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,27 +35,29 @@ class _ProfileState extends State<Profile> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                height: 200,
-                width: 200,
+                height: 250,
+                width: 250,
                 margin: EdgeInsets.only(top: 50),
                 child: Stack(
                   children: [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://mangobee.influxdev.com/public/userpic/' +
-                              Profilecontrollers.Profile!.data!.userpic
-                                  .toString()),
-                      radius: 150,
+                    Obx(
+                      () => CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            'https://mangobee.influxdev.com/public/userpic/${Profilecontrollers.Profilelist[0].data!.userpic.toString()}'),
+                        radius: 180,
+                      ),
                     ),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Container(
-                        height: 30,
-                        width: 30,
+                        margin: EdgeInsets.only(right: 20),
+                        height: 40,
+                        width: 40,
                         decoration: BoxDecoration(
-                            color: Colors.yellow, shape: BoxShape.circle),
+                            color: Colors.orange, shape: BoxShape.circle),
                         child: Icon(
                           Icons.edit,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -54,16 +70,21 @@ class _ProfileState extends State<Profile> {
             children: [
               Container(
                 margin: EdgeInsets.only(top: 10),
-                child: Text(
-                  Profilecontrollers.Profile!.data!.name.toString(),
-                  style: TextStyle(fontSize: 20),
+                child: Obx(
+                  () => Text(
+                    Profilecontrollers.Profilelist[0].data!.name.toString(),
+                    style: titleTextStyle,
+                  ),
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(top: 5),
-                child: Text(
-                  Profilecontrollers.Profile!.data!.phonenumber.toString(),
-                  style: TextStyle(fontSize: 15),
+                child: Obx(
+                  () => Text(
+                    Profilecontrollers.Profilelist[0].data!.phonenumber
+                        .toString(),
+                    style: titleTextStyle,
+                  ),
                 ),
               ),
               SizedBox(
@@ -80,7 +101,7 @@ class _ProfileState extends State<Profile> {
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
-                      primary: Colors.yellow,
+                      primary: Colors.orange,
                       fixedSize: Size(250, 15)),
                 ),
               ),

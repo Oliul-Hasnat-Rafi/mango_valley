@@ -39,7 +39,7 @@ class _singupState extends State<singup> {
                           "Create new \n Account",
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  color: Color.fromARGB(238, 49, 2, 75),
+                                  color: Colors.orange,
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold)),
                         ),

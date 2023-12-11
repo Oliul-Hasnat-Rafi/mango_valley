@@ -119,6 +119,7 @@ class AppServer {
       if (response.statusCode == 200) {
         return Productinfo.fromJson(response.data);
       }
+      print('.........$response');
     } catch (e) {
       print(e);
     }
@@ -139,6 +140,8 @@ class AppServer {
       if (response.statusCode == 200) {
         return ProfileModel.fromJson(response.data);
       }
+
+      print("profile:" + response.toString());
     } catch (e) {
       print(e);
     }

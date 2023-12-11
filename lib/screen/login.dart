@@ -16,14 +16,9 @@ class login extends StatefulWidget {
 class _loginState extends State<login> {
   TextEditingController phonecontroller = TextEditingController();
   TextEditingController passcontroller = TextEditingController();
-  void initState() async {
+  void initState() {
     super.initState();
-    final token = await box!.get('token');
-    print("Token" + token);
-    if (token != null) {
-      Get.to(Homepage());
-    }
-    print(token);
+    tokencheck();
   }
 
   @override
@@ -135,7 +130,8 @@ class _loginState extends State<login> {
                               Get.to(Homepage());
                               box!.put(
                                   'token', response.data["token"].toString());
-                              box!.put('id', response.data["id"].toString());
+                              box!.put(
+                                  'id', response.data["data"]['id'].toString());
                             }
                           },
                           icon: Icon(
@@ -183,5 +179,16 @@ class _loginState extends State<login> {
         ),
       ),
     );
+  }
+
+  void tokencheck() async {
+    final token = await box!.get('token');
+    final userid = await box!.get('id').toString();
+    print("Token : " + token);
+
+    if (token != null) {
+      Get.to(Homepage());
+    }
+    print("user id: " + userid);
   }
 }
