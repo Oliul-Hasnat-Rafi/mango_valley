@@ -1,4 +1,4 @@
-# project1_class17 Mango Valley
+#Mango Valley
 <h2>Project Screenshots:</h2>
 <p align="center">
   <b>Login and Signup
